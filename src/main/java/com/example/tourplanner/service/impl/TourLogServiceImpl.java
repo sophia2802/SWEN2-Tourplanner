@@ -11,6 +11,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class TourLogServiceImpl implements TourLogService {
 
@@ -42,12 +44,33 @@ public class TourLogServiceImpl implements TourLogService {
 
     @Override
     public void updateTourLog(Long id, TourLogDto tourLogDto) {
+        TourLogEntity existingTourLog = tourLogRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("TourLog not found"));
 
+        if (tourLogDto.getTourId() != null && !tourLogDto.getTourId().equals(existingTourLog.getTour().getId())) {    //check if tour exists
+            TourEntity relatedTour = tourRepository.findById(tourLogDto.getTourId()).orElseThrow(() -> new EntityNotFoundException("Tour not found"));
+            existingTourLog.setTour(relatedTour);
+        }
+
+        existingTourLog.setDate(tourLogDto.getDate());
+        existingTourLog.setComment(tourLogDto.getComment());
+        existingTourLog.setDifficulty(tourLogDto.getDifficulty());
+        existingTourLog.setTotalDistance(tourLogDto.getTotalDistance());
+        existingTourLog.setTotalTime(tourLogDto.getTotalTime());
+        existingTourLog.setRating(tourLogDto.getRating());
+
+        tourLogRepository.save(existingTourLog);
     }
 
     @Override
     public void deleteTourLog(Long id) {
+        TourLogEntity tourLog = tourLogRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("TourLog not found"));
+        tourLogRepository.delete(tourLog);
+    }
 
+    @Override
+    public List<TourLogDto> getAllTourLogsByTourId(Long tourId){
+        List<TourLogEntity> tourLogEntities = tourLogRepository.findByTourId(tourId);
+        return tourLogMapper.mapToDto(tourLogEntities);
     }
 
     @Override

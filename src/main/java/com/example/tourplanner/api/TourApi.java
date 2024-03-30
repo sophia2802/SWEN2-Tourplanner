@@ -4,8 +4,6 @@ package com.example.tourplanner.api;
 import com.example.tourplanner.service.TourService;
 import com.example.tourplanner.service.dtos.TourDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
