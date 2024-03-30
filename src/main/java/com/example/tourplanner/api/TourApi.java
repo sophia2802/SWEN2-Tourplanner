@@ -20,8 +20,32 @@ public class TourApi {
     private TourService tourService;
 
     @PostMapping
-    public ResponseEntity<TourDto> createTour(@RequestBody TourDto tourDto) {
+    public void insertTour(@RequestBody TourDto tourDto) {
         tourService.createTour(tourDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public void updateTour(@PathVariable Long id, @RequestBody TourDto tourDto) {
+        tourService.updateTour(id, tourDto);
+    }
+
+    @GetMapping("/id/{id}")
+    public TourDto getTourById(@PathVariable Long id) {
+        return tourService.getTourById(id);
+    }
+
+    @GetMapping
+    public List<TourDto> getAllTours() {
+        return tourService.getAllTours();
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteTour(@PathVariable Long id) {
+        tourService.deleteTour(id);
+    }
+
+    @GetMapping("/search")
+    public List<TourDto> searchTours(@RequestParam String keyword) {
+        return tourService.searchTours(keyword);
     }
 }

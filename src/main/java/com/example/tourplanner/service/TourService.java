@@ -10,4 +10,6 @@ public interface TourService {
     void deleteTour(Long id);
     TourDto getTourById(Long id);
     List<TourDto> getAllTours();
+    List<TourDto> searchTours(String keyword);
+
 }
