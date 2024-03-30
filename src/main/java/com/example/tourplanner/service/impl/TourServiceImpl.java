@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class TourServiceImpl implements TourService {
@@ -53,19 +54,25 @@ public class TourServiceImpl implements TourService {
     }
 
     @Override
-    public void deleteTour(Long id){
-
+    public void deleteTour(Long id) {
+        tourRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Tour not found"));
+        tourRepository.deleteById(id);
     }
 
     @Override
     public TourDto getTourById(Long id){
-        return null;
+        TourEntity tourEntity = tourRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Tour not found"));
+        return tourMapper.mapToDto(tourEntity);
     }
 
     @Override
     public List<TourDto> getAllTours(){
-        return null;
+        return tourMapper.mapToDto(tourRepository.findAll());
     }
 
-
+    @Override
+    public List<TourDto> searchTours(String keyword) {
+        List<TourEntity> tours = tourRepository.findByNameContainingIgnoreCase(keyword);
+        return tourMapper.mapToDto(tours);
+    }
 }
