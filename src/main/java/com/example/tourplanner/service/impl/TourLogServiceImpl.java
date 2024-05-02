@@ -46,11 +46,6 @@ public class TourLogServiceImpl implements TourLogService {
     public void updateTourLog(Long id, TourLogDto tourLogDto) {
         TourLogEntity existingTourLog = tourLogRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("TourLog not found"));
 
-        if (tourLogDto.getTourId() != null && !tourLogDto.getTourId().equals(existingTourLog.getTour().getId())) {    //check if tour exists
-            TourEntity relatedTour = tourRepository.findById(tourLogDto.getTourId()).orElseThrow(() -> new EntityNotFoundException("Tour not found"));
-            existingTourLog.setTour(relatedTour);
-        }
-
         existingTourLog.setDate(tourLogDto.getDate());
         existingTourLog.setComment(tourLogDto.getComment());
         existingTourLog.setDifficulty(tourLogDto.getDifficulty());
