@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200/")
 @RequestMapping(path = "tour")
 
 
@@ -17,7 +18,7 @@ public class TourApi {
     @Autowired
     private TourService tourService;
 
-    @PostMapping
+    @PostMapping("/create")
     public void insertTour(@RequestBody TourDto tourDto) {
         tourService.createTour(tourDto);
     }
@@ -32,7 +33,7 @@ public class TourApi {
         return tourService.getTourById(id);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<TourDto> getAllTours() {
         return tourService.getAllTours();
     }
