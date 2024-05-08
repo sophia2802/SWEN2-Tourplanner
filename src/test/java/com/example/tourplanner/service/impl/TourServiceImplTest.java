@@ -55,7 +55,7 @@ public class TourServiceImplTest {
 
     @Test
     void createTour() {
-        when(tourRepository.save(any(TourEntity.class))).thenReturn(mockTourEntity);
+        when(tourRepository.save(any(TourEntity.class))).thenReturn(mockTourEntity);    //defines expecting save behavior --> if tour entity is called, return mockTourEntity
         tourService.createTour(mockTourDto);
         verify(tourRepository).save(any(TourEntity.class));
     }
@@ -97,7 +97,7 @@ public class TourServiceImplTest {
     void updateTour_TourNotFound() {
         when(tourRepository.findById(any(Long.class))).thenReturn(Optional.empty());
 
-        Exception exception = assertThrows(EntityNotFoundException.class, () -> {
+        Exception exception = assertThrows(EntityNotFoundException.class, () -> {   //assertThrows checks if it throws an exception
             tourService.updateTour(1L, new TourDto());
         });
 
