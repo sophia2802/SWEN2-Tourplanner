@@ -1,8 +1,11 @@
 package com.example.tourplanner.api;
 
 
+import com.example.tourplanner.persistence.repositories.TourRepository;
 import com.example.tourplanner.service.TourService;
 import com.example.tourplanner.service.dtos.TourDto;
+import com.example.tourplanner.service.impl.TourServiceImpl;
+import com.example.tourplanner.service.mapper.TourMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +18,12 @@ import java.util.List;
 
 public class TourApi {
 
+    private final TourService tourService;
+
     @Autowired
-    private TourService tourService;
+    public TourApi(TourMapper tourMapper, TourRepository tourRepository) {
+        this.tourService = TourServiceImpl.getInstance(tourMapper, tourRepository);
+    }
 
     @PostMapping("/create")
     public void insertTour(@RequestBody TourDto tourDto) {

@@ -15,10 +15,24 @@ import java.util.List;
 @Component
 public class TourServiceImpl implements TourService {
 
+    private static TourServiceImpl instance;
+
+    private final TourMapper tourMapper;
+    private final TourRepository tourRepository;
+
     @Autowired
-    private TourMapper tourMapper;
-    @Autowired
-    private TourRepository tourRepository;
+    private TourServiceImpl(TourMapper tourMapper, TourRepository tourRepository) {
+        this.tourMapper = tourMapper;
+        this.tourRepository = tourRepository;
+    }
+
+    //implement singleton design pattern
+    public static synchronized TourServiceImpl getInstance(TourMapper tourMapper, TourRepository tourRepository) {
+        if (instance == null) {
+            instance = new TourServiceImpl(tourMapper, tourRepository);
+        }
+        return instance;
+    }
 
     @Override
     public void createTour(TourDto tourDto){
