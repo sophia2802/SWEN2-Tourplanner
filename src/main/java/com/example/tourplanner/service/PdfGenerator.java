@@ -37,7 +37,7 @@ public class PdfGenerator {
         templateEngine.setTemplateResolver(templateResolver);
     }
 
-    private String parseThymeleafTemplate(Long tourId) {
+    public String parseThymeleafTemplate(Long tourId) {
         TourEntity tour = tourRepository.findById(tourId).orElseThrow(() -> new RuntimeException("Tour not found"));
         List<TourLogEntity> tourLogs = tourLogRepository.findByTourId(tourId);
 
@@ -48,7 +48,7 @@ public class PdfGenerator {
         return templateEngine.process("thymeleaf/tour_report", context);
     }
 
-    private void generatePdfFromHtml(String html, String outputPath) throws Exception {
+    void generatePdfFromHtml(String html, String outputPath) throws Exception {
         OutputStream outputStream = new FileOutputStream(outputPath);
         ITextRenderer renderer = new ITextRenderer();
         renderer.setDocumentFromString(html);
