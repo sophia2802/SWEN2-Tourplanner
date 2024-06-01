@@ -1,0 +1,24 @@
+[
+  {
+    "id": 5,
+    "name": "Tour A",
+    "description": "Description for Tour A",
+    "arrival": "City A",
+    "departure": "City B",
+    "transportType": "Car",
+    "distance": 120.5,
+    "estimatedTime": "2 hours",
+    "routeImage": "imageA.png"
+  },
+  {
+    "id": 6,
+    "name": "Tour B",
+    "description": "Description for Tour B",
+    "arrival": "City C",
+    "departure": "City D",
+    "transportType": "Bike",
+    "distance": 45.0,
+    "estimatedTime": "1 hour",
+    "routeImage": "imageB.png"
+  }
+]
